@@ -135,9 +135,7 @@ class UNet(nn.Module):
 
         # 输出
         logits = self.out_conv(dec4)
-        return logits
-        
-        
+        return logits     
 if __name__ == "__main__":
     # 示例用法
     in_channels = 3  # 输入图像的通道数

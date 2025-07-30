@@ -27,7 +27,6 @@ class PatchEmbed(nn.Module):
 
         # 将卷积输出展平并调整维度
         patch_embed = conv_embed.flatten(2).transpose(1, 2)  # (批大小, (height/patch_size) * (width/patch_size), d_model)
-
         return patch_embed
 
 class ViTransformer(nn.Module):
@@ -60,11 +59,11 @@ class ViTransformer(nn.Module):
         x = x + self.pos_embedding  # (批大小, num_patches + 1, d_model)
         x = self.norm(x)
 
-        # Transformer Encoder
+        # 添加eca模块
         x=self.eca(x)
         out = self.transformer(x.transpose(0, 1)).transpose(0, 1)  # (批大小, num_patches + 1, d_model)
 
-        # Classification
+        # 分类
         out = self.cls_liner(out[:, 0, :])  # (批大小, cls_num)
         return out
     
@@ -76,9 +75,7 @@ class ViTransformer(nn.Module):
     
     
     
-    
-    
-    
+
     
 if __name__ == "__main__":
     batch_size = 1
